@@ -1,0 +1,30 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: ':'
+spec:
+  refName: ""
+  version: ""
+  releaseNotes: |
+    Initial release of the simple app package
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/tap-images/workloads/tanzu-java-web-app-alm77-default@sha256:536ba07813dac20c63dc377c82db15060b1fe65adafc5675c0f8dba14cb84026
+      template:
+        spec:
+          fetch:
+          - imgpkgBundle:
+              image: ${BUNDLE}
+          template:
+          - ytt:
+              paths:
+              - config/
+          - kbld:
+              paths:
+              - .imgpkg/images.yml
+              - '-'
+      deploy:
+      - kapp: {}
+
