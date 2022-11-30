@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: tanzu-java-web-app-gitops-test-alm-1.0.0
+spec:
+  refName: tanzu-java-web-app-gitops-test-alm
+  version: 1.0.0
+  releaseNotes: |
+    Initial release of the simple app package
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/tap-images/workloads/bundle
+      template:
+      - ytt:
+          paths:
+          - config/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
