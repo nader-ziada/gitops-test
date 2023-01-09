@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tanzu-nginx-server-alm22
+  annotations:
+    kapp.k14s.io/update-strategy: fallback-on-replace
+    ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
+  labels:
+    app.kubernetes.io/part-of: tanzu-nginx-server
+    apps.tanzu.vmware.com/workload-type: server
+    app.kubernetes.io/component: run
+    carto.run/workload-name: tanzu-nginx-server-alm22
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: run
+      app.kubernetes.io/part-of: tanzu-nginx-server
+      apps.tanzu.vmware.com/workload-type: server
+      carto.run/workload-name: tanzu-nginx-server-alm22
+  template:
+    metadata:
+      annotations:
+        conventions.carto.run/applied-conventions: appliveview-sample/app-live-view-appflavour-check
+        developer.conventions/target-containers: workload
+      labels:
+        app.kubernetes.io/component: run
+        app.kubernetes.io/part-of: tanzu-nginx-server
+        apps.tanzu.vmware.com/workload-type: server
+        carto.run/workload-name: tanzu-nginx-server-alm22
+    spec:
+      containers:
+      - image: index.docker.io/library/nginx@sha256:9a821cadb1b13cb782ec66445325045b2213459008a41c72d8d87cde94b33c8c
+        name: workload
+        resources: {}
+        securityContext:
+          runAsUser: 1000
+      serviceAccountName: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tanzu-nginx-server-alm22
+  labels:
+    app.kubernetes.io/part-of: tanzu-nginx-server
+    apps.tanzu.vmware.com/workload-type: server
+    app.kubernetes.io/component: run
+    carto.run/workload-name: tanzu-nginx-server-alm22
+spec:
+  selector:
+    app.kubernetes.io/component: run
+    app.kubernetes.io/part-of: tanzu-nginx-server
+    apps.tanzu.vmware.com/workload-type: server
+    carto.run/workload-name: tanzu-nginx-server-alm22
+  ports:
+  - targetPort: 8080
+    port: 8080
+    name: http
+
