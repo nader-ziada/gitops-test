@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: dev.example.com.20230228200224.0.0
+spec:
+  refName: dev.example.com
+  version: 20230228200224.0.0
+  releaseNotes: |
+    Release v20230228200224.0.0 of package dev.example.com
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/dev-default-bundle@sha256:53afb7ea0232461ebcf767525320fd6abd47d9cd67a1f2ec549b8c80cc3b73ee
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
