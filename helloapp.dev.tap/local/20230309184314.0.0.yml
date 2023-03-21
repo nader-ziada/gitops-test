@@ -3,7 +3,7 @@ apiVersion: packaging.carvel.dev/v1alpha1
 kind: PackageInstall
 metadata:
   name: helloapp.dev.tap
-  namespace: dev
+  namespace: test
 spec:
   serviceAccountName: default
   packageRef:
@@ -18,7 +18,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: dev-values
-  namespace: dev
+  namespace: test
 stringData:
   values.yml: |
     ---
