@@ -11,4 +11,15 @@ spec:
       constraints: "20230309184314.0.0"
   values:
   - secretRef:
-      name: dev-values
+      name: helloapp-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloapp-values
+  namespace: dev
+stringData:
+  values.yml: |
+    ---
+    replicas: 2
+    hostname: 35.245.126.176.nip.io
