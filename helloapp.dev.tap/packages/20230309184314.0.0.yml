@@ -2,6 +2,7 @@ apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
   name: helloapp.dev.tap.20230309184314.0.0
+  namespace: test
 spec:
   refName: helloapp.dev.tap
   version: 20230309184314.0.0
