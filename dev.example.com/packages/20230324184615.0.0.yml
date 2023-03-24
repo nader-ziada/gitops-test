@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: dev.default.tap.20230324184615.0.0
+spec:
+  refName: dev.default.tap
+  version: 20230324184615.0.0
+  releaseNotes: |
+    Release v20230324184615.0.0 of package dev.default.tap
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/dev-default-bundle@sha256:0ed625aedc929b24d3681c81c61a930e065e870ee333bad6db078ab3911e3af2
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
