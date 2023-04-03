@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: helloapp.default.tap.20230331164831.0.0
+spec:
+  refName: helloapp.default.tap
+  version: 20230331164831.0.0
+  releaseNotes: |
+    Release v20230331164831.0.0 of package helloapp.default.tap
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/helloapp-default-bundle@sha256:036f25f2d7a16e79b1eb67567c8762d84476c324aae5b40a8471c5a339104cbb
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
