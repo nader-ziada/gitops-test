@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: ingresstest.dev3.vmware.com.20230411201217.0.0
+spec:
+  refName: ingresstest.dev3.vmware.com
+  version: 20230411201217.0.0
+  releaseNotes: |
+    Release v20230411201217.0.0 of package ingresstest.dev3.vmware.com
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/ingresstest-dev3-bundle@sha256:b22792d08c120dfe150393b52a1e2163ad3036c42abdc8ffce26cc24f4b09b50
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
