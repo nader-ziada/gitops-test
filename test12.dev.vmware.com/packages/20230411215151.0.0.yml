@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: test12.dev.vmware.com.20230411215151.0.0
+spec:
+  refName: test12.dev.vmware.com
+  version: 20230411215151.0.0
+  releaseNotes: |
+    Release v20230411215151.0.0 of package test12.dev.vmware.com
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/test12-dev-bundle@sha256:202875deea5a049151e495021574da81f3df44f17acf8eea2f1135c5cb276699
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
