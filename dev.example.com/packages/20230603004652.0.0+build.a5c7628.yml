@@ -1,0 +1,25 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: dev.default.vmware.com.20230603004652.0.0+build.a5c7628
+spec:
+  refName: dev.default.vmware.com
+  version: 20230603004652.0.0+build.a5c7628
+  releaseNotes: |
+    Release v20230603004652.0.0+build.a5c7628 of package dev.default.vmware.com
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/dev-default-bundle@sha256:149a2571eaa7fc045dd8680fd8cf8ab02434b07312b1d57c55e117848183ab2f
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
