@@ -4,7 +4,7 @@ kind: PackageInstall
 metadata:
   name: dev.default.vmware.com.pkgi
 spec:
-  serviceAccountName: alm-sample-registry-creds-sa
+  serviceAccountName: default
   packageRef:
     refName: dev.default.vmware.com
     versionSelection:
