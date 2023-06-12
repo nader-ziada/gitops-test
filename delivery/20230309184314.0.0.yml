@@ -1,0 +1,24 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: dev.default.vmware.com.pkgi
+spec:
+  serviceAccountName: alm-sample-registry-creds-sa
+  packageRef:
+    refName: dev.default.vmware.com
+    versionSelection:
+      constraints: "20230612163120.0.0+build.a5c7628"
+  values:
+  - secretRef:
+      name: helloapp-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloapp-values
+stringData:
+  values.yml: |
+    ---
+    replicas: 2
+    hostname: 35.245.126.176.nip.io
