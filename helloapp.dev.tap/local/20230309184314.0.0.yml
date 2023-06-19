@@ -1,24 +1,26 @@
----
-apiVersion: packaging.carvel.dev/v1alpha1
-kind: PackageInstall
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
 metadata:
-  name: helloapp.dev.tap.pkgi
+  name: helloapp.dev.tap.20230309184314.0.0
+  namespace: test
 spec:
-  serviceAccountName: pkg-gitops-pkgi-sa
-  packageRef:
-    refName: helloapp.dev.tap
-    versionSelection:
-      constraints: "20230309184314.0.0"
-  values:
-  - secretRef:
-      name: helloapp-values
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: helloapp-values
-stringData:
-  values.yml: |
-    ---
-    replicas: 2
-    hostname: 35.245.126.176.nip.io
+  refName: helloapp.dev.tap
+  version: 20230309184314.0.0
+  releaseNotes: |
+    Release v20230309184314.0.0 of package helloapp.dev.tap
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: gcr.io/nziada-tkg-dev/alm-sample/helloapp-dev-bundle@sha256:58c5a0c4e4e5c08fb11828e3a9d31a1f4a8fc282843d68e3f5a266e7f2997475
+      template:
+      - ytt:
+          paths:
+          - .
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}
+
