@@ -1,0 +1,24 @@
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: helloapp.dev.tap.pkgi
+spec:
+  serviceAccountName: pkg-gitops-pkgi-sa
+  packageRef:
+    refName: helloapp.dev.tap
+    versionSelection:
+      constraints: "20230309184314.0.0"
+  values:
+  - secretRef:
+      name: helloapp-values
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloapp-values
+stringData:
+  values.yml: |
+    ---
+    replicas: 2
+    hostname: 35.245.126.176.nip.io
